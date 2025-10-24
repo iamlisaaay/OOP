@@ -65,13 +65,16 @@
 	</ItemGroup>
 
 	<ItemGroup>
+	  <Compile Update="TablePage.xaml.cs">
+	    <DependentUpon>TablePage.xaml</DependentUpon>
+	  </Compile>
 	  <Compile Update="HelpPage.xaml.cs">
 	    <DependentUpon>HelpPage.xaml</DependentUpon>
 	  </Compile>
 	</ItemGroup>
 
 	<ItemGroup>
-	  <MauiXaml Update="HelpPage - Копировать.xaml">
+	  <MauiXaml Update="TablePage.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
 	  <MauiXaml Update="HelpPage.xaml">
