@@ -1,0 +1,34 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="MauiApp1.HelpPage"
+             Title="Довідка">
+
+    <ScrollView>
+        <VerticalStackLayout Padding="20" Spacing="15">
+            <Label Text="Довідка"
+                   FontSize="24"
+                   FontAttributes="Bold"
+                   HorizontalOptions="Center" />
+
+            <Label Text="У цьому застосунку ви можете створювати нові таблиці, відкривати існуючі та керувати ними."
+                   FontSize="16"
+                   LineBreakMode="WordWrap" />
+
+            <Label Text="• Натисніть 'Створити нову таблицю', щоб створити нову."
+                   FontSize="16" />
+
+            <Label Text="• Натисніть 'Відкрити нову таблицю', щоб переглянути або редагувати існуючу."
+                   FontSize="16" />
+
+            <Label Text="• Ця довідка допоможе вам зорієнтуватися у функціях програми."
+                   FontSize="16" />
+
+            <Button Text="Повернутися на головну"
+                    Clicked="OnBackClicked"
+                    CornerRadius="12"
+                    HorizontalOptions="Center"
+                    WidthRequest="220"/>
+        </VerticalStackLayout>
+    </ScrollView>
+</ContentPage>
