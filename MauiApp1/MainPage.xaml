@@ -8,15 +8,29 @@
             Padding="30,0"
             Spacing="25">
             <Image
-                Source="pngegg.png"
+                Source="num.png"
                 HeightRequest="185"
                 Aspect="AspectFit"
                 SemanticProperties.Description="dot net bot in a hovercraft number nine" />
 
-            <Label
-                Text="yesліби EXEL"
-                Style="{StaticResource Headline}"
-                SemanticProperties.HeadingLevel="Level1" />
+            <HorizontalStackLayout
+    HorizontalOptions="Center"
+    Spacing="8">
+
+              
+                <Label 
+        Text="yesліби"
+        Style="{StaticResource Headline}"
+        SemanticProperties.HeadingLevel="Level1"
+        VerticalOptions="Center" />
+
+                <Image 
+        Source="excel.png"
+        HeightRequest="50"
+    
+        VerticalOptions="Center" />
+            </HorizontalStackLayout>
+
 
             <Label
                 Text="Вітаю вас у yesліби EXEL, тут ви можете створити таблицю, і навіть обрахувати деякі формули"
