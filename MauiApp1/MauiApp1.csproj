@@ -82,8 +82,6 @@
 	  </MauiXaml>
 	</ItemGroup>
 
-	<ItemGroup>
-	  <ProjectReference Include="..\MauiApp1.Logic\MauiApp1.Logic.csproj" />
-	</ItemGroup>
+
 
 </Project>
