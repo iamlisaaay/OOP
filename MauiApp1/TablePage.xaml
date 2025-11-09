@@ -7,42 +7,49 @@
     <ScrollView>
         <VerticalStackLayout Padding="20" Spacing="15">
 
-            <!-- Заголовок сторінки -->
+
             <Label x:Name="PageTitle"
                    Text="Таблиця"
                    FontSize="24"
                    HorizontalOptions="Center" />
 
             <!-- Кнопки для керування таблицею -->
-            <HorizontalStackLayout Spacing="10">
-                <Button Text="Додати рядок" Clicked="OnAddRowClicked"/>
-                <Button Text="Додати стовпчик" Clicked="OnAddColumnClicked"/>
+            <HorizontalStackLayout Spacing="10" HorizontalOptions="Center">
+                <Button Text="➕ Додати рядок" Clicked="OnAddRowClicked"
+                        CornerRadius="10" BackgroundColor="#CDE5A7"/>
+                <Button Text="➕ Додати стовпчик" Clicked="OnAddColumnClicked"
+                        CornerRadius="10" BackgroundColor="#CDE5A7"/>
+                <Button Text="➖ Видалити рядок" Clicked="OnDeleteRowClicked"
+                        CornerRadius="10" BackgroundColor="#F9B9B9"/>
+                <Button Text="➖ Видалити стовпець" Clicked="OnDeleteColumnClicked"
+                        CornerRadius="10" BackgroundColor="#F9B9B9"/>
             </HorizontalStackLayout>
 
-            <!-- Grid таблиці -->
-            <Grid x:Name="TableGrid" RowSpacing="2" ColumnSpacing="2" BackgroundColor="LightGray">
-            </Grid>
+            <!-- Таблиця -->
+            <Grid x:Name="TableGrid"
+                  RowSpacing="2"
+                  ColumnSpacing="2"
+                  BackgroundColor="LightGray" />
 
-            <!-- Кнопка обчислення виразів -->
+            <!-- Перемикач режиму перегляду -->
             <HorizontalStackLayout Spacing="10" VerticalOptions="Center">
                 <Label Text="Показувати значення" VerticalOptions="Center"/>
                 <Switch x:Name="ViewSwitch" Toggled="OnViewToggled"/>
             </HorizontalStackLayout>
-            <HorizontalStackLayout
-                Spacing="10"
-                HorizontalOptions="Center">
-            <Button 
-                Text="Зберегти таблицю" 
-                Clicked="OnSaveClicked"
-                CornerRadius="12"
-                WidthRequest="220"
-            />
-            <Button Text="Повернутися на головну"
-                Clicked="OnBackClicked"
-                CornerRadius="12"
-                WidthRequest="220"/>
-            </HorizontalStackLayout>
 
+            <!-- Кнопки дій -->
+            <HorizontalStackLayout Spacing="10" HorizontalOptions="Center">
+                <Button Text="💾 Зберегти таблицю"
+                        Clicked="OnSaveClicked"
+                        CornerRadius="12"
+                        WidthRequest="220"
+                        BackgroundColor="#A2C4F9"/>
+                <Button Text="🏠 Повернутися на головну"
+                        Clicked="OnBackClicked"
+                        CornerRadius="12"
+                        WidthRequest="220"
+                        BackgroundColor="#D9B8F2"/>
+            </HorizontalStackLayout>
 
         </VerticalStackLayout>
     </ScrollView>

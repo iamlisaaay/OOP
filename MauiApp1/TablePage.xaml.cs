@@ -463,7 +463,8 @@ public partial class TablePage : ContentPage
             {
                 string cellName = GetCellName(r, c);
                 string value = tableCells[r, c].Value ?? "0";
-               
+                if (string.IsNullOrWhiteSpace(value))
+                    value = "0";
                 expr = System.Text.RegularExpressions.Regex.Replace(
                     expr,
                     $@"\b{cellName}\b",
@@ -478,7 +479,7 @@ public partial class TablePage : ContentPage
         await SaveFileAsync();
     }
 
-    private async Task SaveFileAsync()
+    public async Task SaveFileAsync()
     {
         try
         {
@@ -523,8 +524,152 @@ public partial class TablePage : ContentPage
     }
     private async void OnBackClicked(object sender, EventArgs e)
     {
-        await Navigation.PopAsync();
+        string action = await DisplayActionSheet(
+            "Якщо ви повернетесь — зміни не будуть збережені.\nЩо зробити?",
+            "Скасувати",
+            null,
+            "Повернутись без збереження",
+            "Зберегти і повернутись"
+        );
+
+        switch (action)
+        {
+            case "Повернутись без збереження":
+                await Navigation.PopAsync();
+                break;
+
+            case "Зберегти і повернутись":
+                await SaveFileAsync();
+                await Navigation.PopAsync();
+                break;
+
+            case "Скасувати":
+            default:
+                break;
+        }
     }
+
+
+    private async void OnDeleteRowClicked(object sender, EventArgs e)
+    {
+        if (rows == 0)
+        {
+            await DisplayAlert("Увага", "Немає рядків для видалення.", "OK");
+            return;
+        }
+
+        string input = await DisplayPromptAsync("Видалення рядка",
+            $"Введіть номер рядка (1-{rows}):");
+
+        if (int.TryParse(input, out int rowToDelete) && rowToDelete >= 1 && rowToDelete <= rows)
+        {
+            DeleteRow(rowToDelete - 1);
+        }
+        else
+        {
+            await DisplayAlert("Помилка", "Некоректний номер рядка.", "OK");
+        }
+    }
+
+    private async void OnDeleteColumnClicked(object sender, EventArgs e)
+    {
+        if (columns == 0)
+        {
+            await DisplayAlert("Увага", "Немає стовпців для видалення.", "OK");
+            return;
+        }
+
+        string input = await DisplayPromptAsync("Видалення стовпця",
+            $"Введіть літеру стовпця (A-{(char)('A' + columns - 1)}):");
+
+        if (!string.IsNullOrWhiteSpace(input))
+        {
+            char colLetter = char.ToUpper(input[0]);
+            int colToDelete = colLetter - 'A';
+
+            if (colToDelete >= 0 && colToDelete < columns)
+            {
+                DeleteColumn(colToDelete);
+            }
+            else
+            {
+                await DisplayAlert("Помилка", "Некоректна літера стовпця.", "OK");
+            }
+        }
+    }
+
+    private void DeleteRow(int rowIndex)
+    {
+        if (rows <= 0 || rowIndex < 0 || rowIndex >= rows) return;
+
+        // Зсунути дані вгору
+        for (int r = rowIndex; r < rows - 1; r++)
+        {
+            for (int c = 0; c < columns; c++)
+            {
+                tableCells[r, c] = tableCells[r + 1, c];
+                tableEntries[r, c].Text = tableCells[r, c]?.Expression ?? "";
+            }
+        }
+
+        rows--;
+        RebuildTable();
+    }
+
+    private void DeleteColumn(int colIndex)
+    {
+        if (columns <= 0 || colIndex < 0 || colIndex >= columns) return;
+
+        // Зсунути дані вліво
+        for (int r = 0; r < rows; r++)
+        {
+            for (int c = colIndex; c < columns - 1; c++)
+            {
+                tableCells[r, c] = tableCells[r, c + 1];
+                tableEntries[r, c].Text = tableCells[r, c]?.Expression ?? "";
+            }
+        }
+
+        columns--;
+        RebuildTable();
+    }
+
+    private void RebuildTable()
+    {
+        TableGrid.Children.Clear();
+        TableGrid.RowDefinitions.Clear();
+        TableGrid.ColumnDefinitions.Clear();
+
+        for (int c = 0; c <= columns; c++)
+            TableGrid.ColumnDefinitions.Add(new ColumnDefinition { Width = GridLength.Auto });
+        for (int r = 0; r <= rows; r++)
+            TableGrid.RowDefinitions.Add(new RowDefinition { Height = GridLength.Auto });
+
+        UpdateHeaders();
+
+        tableEntries = new Entry[rows, columns];
+        for (int r = 0; r < rows; r++)
+        {
+            for (int c = 0; c < columns; c++)
+            {
+                var entry = CreateEntry(r, c);
+                TableGrid.Add(entry, c + 1, r + 1);
+                tableEntries[r, c] = entry;
+            }
+        }
+
+        RecalculateAll();
+    }
+
+
+
+
+
+
+
+
+
+
 
 
 
